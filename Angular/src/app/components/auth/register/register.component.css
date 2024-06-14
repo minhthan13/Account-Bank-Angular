@@ -1,0 +1,14 @@
+::ng-deep input[pinputtext] {
+  width: 20rem;
+}
+
+span.app-valid {
+  height: 1rem;
+  font-size: small;
+}
+
+.label-register::after {
+  content: "*";
+  padding-left: 3px;
+  color: red;
+}
