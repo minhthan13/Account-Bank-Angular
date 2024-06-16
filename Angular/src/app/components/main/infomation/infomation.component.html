@@ -1,0 +1,178 @@
+<div class="flex flex-row justify-content-center">
+  @if(user!=null){
+  <p-fieldset class="col-8">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2 px-2">
+        <p-avatar image="assets/images/logo/hyper.png" shape="circle" />
+        <span class="font-bold">INFOMATION</span>
+      </div>
+    </ng-template>
+    <div class="flex justify-content-center">
+      <p-card class="col-8">
+        <ng-template pTemplate="header">
+          <img alt="Card" src="assets/images/account/card-info.png" />
+        </ng-template>
+        <div class="flex flex-column gap-3">
+          <div class="flex gap-3 align-items-center">
+            <label class="font-semibold w-8rem">Username:</label>
+            <div class="flex-auto">{{ user.username }}</div>
+          </div>
+          <div class="flex gap-3 align-items-center">
+            <label class="font-semibold w-8rem">Email:</label>
+            <div class="flex-auto">{{ user.email }}</div>
+          </div>
+          <div class="flex gap-3 align-items-center">
+            <label class="font-semibold w-8rem">Full Name:</label>
+            <div class="flex-auto">{{ user.fullName }}</div>
+          </div>
+          <div class="flex gap-3 align-items-center">
+            <label class="font-semibold w-8rem">Phone Number:</label>
+            <div class="flex-auto">{{ user.phone }}</div>
+          </div>
+          <div class="flex gap-3 align-items-center">
+            <label class="font-semibold w-8rem">Balance:</label>
+            <div class="flex-auto">
+              <p-chip styleClass="pl-0 mr-4 pr-3">
+                <i
+                  class="pi pi-dollar bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center"
+                ></i>
+                <span class="ml-2 font-medium"> {{ user.balance }} </span>
+              </p-chip>
+            </div>
+          </div>
+        </div>
+
+        <ng-template pTemplate="footer">
+          <div class="flex gap-2 mt-1">
+            <p-button
+              label="Deposite"
+              severity="success"
+              class="w-full"
+              styleClass="w-full"
+            />
+            <p-button
+              label="Withdraw"
+              severity="danger"
+              class="w-full"
+              styleClass="w-full"
+            />
+            <p-button
+              label="Edit"
+              class="w-full"
+              styleClass="w-full"
+              (onClick)="showDialog()"
+            />
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+  </p-fieldset>
+
+  <p-dialog header="Edit Profile" [modal]="true" [(visible)]="visible">
+    <div class="flex flex-row justify-content-center">
+      <div class="card p-5 border-round shadow-2 form-auth">
+        <div class="text-center mb-5">
+          <img
+            src="assets/images/logo/hyper.png"
+            alt="Image"
+            height="50"
+            class="mb-3"
+          />
+        </div>
+
+        <form
+          [formGroup]="formUpdate"
+          (ngSubmit)="UpdateSubmit()"
+          class="flex flex-column"
+          #formR
+        >
+          <div class="flex column-gap-5 justify-content-around">
+            <div class="left">
+              <div class="flex flex-column gap-2 mb-3">
+                <div class="flex align-items-center">
+                  <label class="font-semibold w-8rem label-register"
+                    >Username</label
+                  >
+                  <input
+                    pInputText
+                    class="flex-auto"
+                    formControlName="username"
+                  />
+                </div>
+              </div>
+
+              <div class="flex flex-column gap-2 mb-3">
+                <div class="flex align-items-center">
+                  <label class="font-semibold w-8rem">Full Name</label>
+                  <input
+                    pInputText
+                    class="flex-auto"
+                    autocomplete="off"
+                    formControlName="fullName"
+                  />
+                </div>
+              </div>
+              <div class="flex flex-column gap-2 mb-3">
+                <div class="flex align-items-center">
+                  <label class="font-semibold w-8rem label-register"
+                    >Email</label
+                  >
+                  <input
+                    pInputText
+                    class="flex-auto"
+                    autocomplete="off"
+                    formControlName="email"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="right">
+              <div class="flex flex-column gap-2 mb-3">
+                <div class="flex align-items-center">
+                  <label class="font-semibold w-8rem label-register"
+                    >New Password</label
+                  >
+                  <p-password [toggleMask]="true" formControlName="password" />
+                </div>
+              </div>
+              <div class="flex flex-column gap-2 mb-3">
+                <div class="flex align-items-center">
+                  <label class="font-semibold w-8rem label-register"
+                    >Confirm</label
+                  >
+                  <p-password [toggleMask]="true" formControlName="Cpassword" />
+                </div>
+                <!-- validate div -->
+
+                <!-- validate div -->
+              </div>
+              <div class="flex flex-column gap-2 mb-3">
+                <div class="flex align-items-center">
+                  <label class="font-semibold w-8rem label-register"
+                    >Phone</label
+                  >
+                  <input
+                    pInputText
+                    class="flex-auto"
+                    autocomplete="off"
+                    formControlName="phone"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-content-end mt-4 gap-2">
+            <p-button
+              label="Cancel"
+              severity="warning"
+              (onClick)="CancelForm()"
+            />
+            <p-button label="Save" type="submit" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </p-dialog>
+  }
+</div>

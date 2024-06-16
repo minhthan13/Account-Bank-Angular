@@ -19,6 +19,9 @@ namespace API.services
     Task<AccountDTO> GetAccountUsernameDTO(string username);
     Task<Account> GetAccountUsername(string username);
     public bool ExistUsername(string username);
+    public bool ExistEmail(string email);
+    public bool ExistPhone(string phone);
+
     public bool VerifyPassword(AccountRequest account);
 
   }

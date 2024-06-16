@@ -1,0 +1,7 @@
+.btnOpenSidebar {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 1rem 1rem 1rem 0.5rem;
+  border-right: 1px solid #dfe7ef;
+}

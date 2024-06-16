@@ -1,0 +1,41 @@
+<div class="flex flex-column justify-content-center align-content-center">
+  <div class="layout-topbar flex flex-row col-12 justify-content-between">
+    <div class="topbar-left">
+      <app-topbar>
+        <p-confirmPopup />
+      </app-topbar>
+    </div>
+    <div class="topbar-right">
+      <p-chip styleClass="pl-0 mr-4 pr-3">
+        <i
+          class="pi pi-dollar bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center"
+        ></i>
+        <span class="ml-2 font-medium">
+          {{ userLogin ? userLogin.balance : 0 }}
+        </span>
+      </p-chip>
+      <p-chip
+        styleClass="pl-2 mr-4 pr-3"
+        label="{{ userLogin?.username ?? '' }}"
+        image="assets/images/logo/hyper.png"
+        alt="Avatar image"
+      />
+      <div class="btnLogout" (click)="Logout($event)">
+        <i class="pi pi-sign-out" style="font-size: 1.4rem"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout-main-container flex flex-row justify-content-center">
+    <div class="main w-full flex flex-column p-5">
+      <router-outlet> </router-outlet>
+    </div>
+    <div class="layout-sidebar">
+      <!-- <app-sidebar /> -->
+    </div>
+  </div>
+
+  <div class="layout-footer">
+    <app-footer />
+  </div>
+</div>

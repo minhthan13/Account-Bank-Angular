@@ -52,14 +52,18 @@ namespace API.controllers
         });
         Account user = JsonConvert.DeserializeObject<Account>(account, setting);
         if (accountService.ExistUsername(user.Username)) return BadRequest(new ErrorResponse(400, "user name alredy exists !!"));
+        if (accountService.ExistEmail(user.Email)) return BadRequest(new ErrorResponse(400, "Email alredy exists !!"));
+        if (accountService.ExistPhone(user.Phone)) return BadRequest(new ErrorResponse(400, "phone number alredy exists !!"));
         user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
         await accountService.Register(user);
-        return Ok("register account successfully");
+        return Ok(new
+        {
+          message = "register account successfully"
+        });
       }
-      catch (Exception ex)
+      catch (BadRequestException ex)
       {
-        var errorMessage = new ValidateError(400, new List<string> { ex.Message });
-        return BadRequest(errorMessage);
+        return BadRequest(new ErrorResponse(400, ex.Message));
       }
     }
 

@@ -88,7 +88,7 @@ namespace API.services
 
       var user = db.Accounts.SingleOrDefault(a => a.Username == account.username);
       if (user == null) throw new NotFoundException(nameof(Account), account.username);
-      if (!VerifyPassword(account)) throw new BadRequestException(401, "password invalid");
+      if (VerifyPassword(account)) throw new BadRequestException(401, "password invalid");
       return user;
 
     }
@@ -110,8 +110,17 @@ namespace API.services
     public bool VerifyPassword(AccountRequest account)
     {
       Account user = db.Accounts.SingleOrDefault(a => a.Username == account.username);
-      return !BCrypt.Net.BCrypt.Verify(account.username, user.Password);
+      return !BCrypt.Net.BCrypt.Verify(account.password, user.Password);
     }
 
+    public bool ExistEmail(string email)
+    {
+      return db.Accounts.Any(a => a.Email == email);
+    }
+
+    public bool ExistPhone(string phone)
+    {
+      return db.Accounts.Any(a => a.Phone == phone);
+    }
   }
 }

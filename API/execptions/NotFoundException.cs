@@ -18,7 +18,7 @@ namespace API.execeptions
     }
 
     public NotFoundException(string name, object key)
-        : base($"Entity \"{name}\" ({key}) was not found.")
+        : base($"Entity '{name}' : ({key}) was not found.")
     {
     }
 

@@ -14,6 +14,7 @@ namespace API.models
     public string? fullName { get; set; }
     public string? email { get; set; }
     public string? phone { get; set; }
+    public double balance { get; set; }
     public AccountDTO(Account account)
     {
       accId = account.AccId;
@@ -22,6 +23,7 @@ namespace API.models
       fullName = account.FullName;
       email = account.Email;
       phone = account.Phone;
+      balance = account.Balance;
     }
     public AccountDTO() { }
 

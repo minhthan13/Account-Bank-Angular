@@ -12,6 +12,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { NgStyle } from '@angular/common';
+import { AccountService } from '../../../services/account.service';
+import { AccountDTO } from '../../../models/Account.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { UserSignalService } from '../../../services/user-signal.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -28,13 +33,12 @@ import { ToastrService } from 'ngx-toastr';
   host: { 'collision-id': 'LoginComponent' },
 })
 export class LoginComponent implements OnInit {
-  Register() {
-    console.log('register');
-  }
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private accountService: AccountService,
+    private userService: UserSignalService
   ) {}
   ngOnInit(): void {
     this.initFormLogin();
@@ -43,9 +47,24 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   login() {
-    if (this.loginForm.invalid) {
-      this.toastr.error('invalid username or password');
+    if (this.loginForm.valid) {
+      let account = this.loginForm.value as AccountDTO;
+      this.accountService.login(account).then(
+        (res) => {
+          this.toastr.success('Login success ');
+          let user = res as AccountDTO;
+          this.userService.setUserSignal(user);
+          this.router.navigate(['/dashboard']);
+        },
+        (err) => {
+          let message = err.error.errors;
+          message?.forEach((m) => {
+            this.toastr.error(m, 'Error');
+          });
+        }
+      );
     } else {
+      this.toastr.error('invalid username or password');
     }
   }
   initFormLogin() {

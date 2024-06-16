@@ -1,4 +1,3 @@
-body {
-  margin: 0;
-  padding: 0;
+::ng-deep .form-auth {
+  background-color: var(--cyan-100) !important;
 }
