@@ -66,7 +66,30 @@ namespace API.controllers
         return BadRequest(new ErrorResponse(400, ex.Message));
       }
     }
+    [HttpPut("edit")]
+    [Produces("application/json")]
+    [Consumes("application/json")]
+    public async Task<IActionResult> Edit([FromBody] AccountDTO account)
+    {
+      try
+      {
 
+        await accountService.Update(account);
+        return Ok(new
+        {
+          message = "Update account successfully ",
+          data = await accountService.GetAccountIdDTO(account.accId)
+        });
+      }
+      catch (BadRequestException ex)
+      {
+        return BadRequest(new ErrorResponse(400, ex.Message));
+      }
+      catch (NotFoundException exx)
+      {
+        return BadRequest(new ErrorResponse(404, exx.Message));
+      }
+    }
     [HttpGet("getAccounts")]
     [Produces("application/json")]
     public async Task<IActionResult> GetAccounts()

@@ -7,6 +7,7 @@ export const ENVIROMENT = {
     AUTH: {
       LOGIN: '/account/login/',
       REGISTER: '/account/register/',
+      EDIT: '/account/edit/',
     },
   },
 };

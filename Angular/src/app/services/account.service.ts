@@ -22,7 +22,9 @@ export class AccountService {
       this.httpClient.post(this.baseUrl + this.END_POINT.LOGIN, account)
     );
   }
-  getAccountUsername(username: string) {
-    // return lastValueFrom(this.httpClient.post());
+  edit(account: AccountDTO) {
+    return lastValueFrom(
+      this.httpClient.put(this.baseUrl + this.END_POINT.EDIT, account)
+    );
   }
 }

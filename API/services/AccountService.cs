@@ -11,6 +11,8 @@ namespace API.services
   {
     Task<Account> Login(AccountRequest account);
     Task Register(Account account);
+    Task Update(AccountDTO account);
+    Task Delete(int id);
 
     Task<List<Account>> GetAccounts();
     Task<List<AccountDTO>> GetAccountsDTO();

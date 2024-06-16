@@ -2,7 +2,16 @@
   <div class="layout-topbar flex flex-row col-12 justify-content-between">
     <div class="topbar-left">
       <app-topbar>
-        <p-confirmPopup />
+        <p-confirmPopup>
+          <ng-template pTemplate="content" let-message>
+            <div
+              class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border p-3 mb-2"
+            >
+              <i [class]="message.icon" class="text-6xl text-primary-500"></i>
+              <p>{{ message.message }}</p>
+            </div>
+          </ng-template>
+        </p-confirmPopup>
       </app-topbar>
     </div>
     <div class="topbar-right">

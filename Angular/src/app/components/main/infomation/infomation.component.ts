@@ -1,5 +1,11 @@
 import { Component, OnInit, Signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { AccountService } from '../../../services/account.service';
 import { ToastrService } from 'ngx-toastr';
@@ -13,6 +19,7 @@ import { CardModule } from 'primeng/card';
 import { ChipModule } from 'primeng/chip';
 import { AccountDTO } from '../../../models/Account.model';
 import { UserSignalService } from '../../../services/user-signal.service';
+import { MatchPasswordValidator } from '../../../shared/validation.directive';
 @Component({
   selector: 'app-infomation',
   standalone: true,
@@ -33,42 +40,67 @@ import { UserSignalService } from '../../../services/user-signal.service';
 })
 export class InfomationComponent implements OnInit {
   CancelForm() {
-    this.visible = false;
+    this.visibleFormEdit = false;
     this.formUpdate.reset();
-    this.initForm();
+    this.initForm(this.user);
   }
   formUpdate: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
     private userService: UserSignalService,
-    private toastr: ToastrService,
+    public toastr: ToastrService,
     private router: Router
-  ) {
+  ) {}
+  ngOnInit(): void {
     this.user = this.userService.getUserSignal;
     if (this.user != null) {
-      this.initForm();
+      this.initForm(this.user);
     }
   }
-  ngOnInit(): void {}
 
-  visible: boolean = false;
+  visibleFormEdit: boolean = false;
+  visibleDeposite: boolean = false;
+  visibleWithdraw: boolean = false;
   user: AccountDTO;
-  showDialog() {
-    this.visible = true;
-  }
+
   UpdateSubmit() {
-    throw new Error('Method not implemented.');
+    if (this.formUpdate.valid) {
+      this.accountService.edit(this.formUpdate.getRawValue()).then(
+        (res: AccountRequest) => {
+          this.userService.setUserSignal(res.data);
+          this.toastr.success(res.message);
+          this.ngOnInit();
+          this.visibleFormEdit = false;
+          console.log(res);
+        },
+        (err) => {
+          console.log(err.error.message);
+        }
+      );
+    }
   }
 
-  initForm() {
+  initForm(user: AccountDTO) {
     this.formUpdate = this.formBuilder.group({
-      username: 'abc',
+      accId: new FormControl({ value: user.accId, disabled: true }),
+      username: new FormControl({ value: user.username, disabled: true }),
       password: '',
-      Cpassword: '',
-      fullName: '',
-      email: '',
-      phone: '',
+      Cpassword: ['', [MatchPasswordValidator('password')]],
+      fullName: user.fullName,
+      email: new FormControl({ value: user.email, disabled: true }),
+      phone: new FormControl({ value: user.phone, disabled: true }),
     });
   }
+  get Cpassword() {
+    return this.formUpdate.get('Cpassword');
+  }
+  showDialogEdit = () => (this.visibleFormEdit = true);
+  showDialogDeposite = () => (this.visibleDeposite = true);
+  showDialogWithdraw = () => (this.visibleWithdraw = true);
+}
+
+interface AccountRequest {
+  message: string;
+  data: AccountDTO;
 }
