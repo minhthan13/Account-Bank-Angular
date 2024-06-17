@@ -1,0 +1,9 @@
+/* ::ng-deep .chip-custom {
+  background-color: transparent;
+  border: 1px solid #3d3737;
+} */
+
+::ng-deep .btn-custom {
+  width: 7rem;
+  padding: 1rem;
+}

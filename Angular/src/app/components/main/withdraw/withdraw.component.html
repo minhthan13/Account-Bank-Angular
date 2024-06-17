@@ -1,1 +1,193 @@
-<p>withdraw works!</p>
+<div class="flex flex-row justify-content-center">
+  <p-fieldset class="col-8">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2 px-2">
+        <p-avatar image="assets/images/logo/hyper.png" shape="circle" />
+        <span class="font-bold uppercase">Withdraw</span>
+      </div>
+    </ng-template>
+    <div class="flex justify-content-center">
+      <p-card class="col-8">
+        <ng-template pTemplate="header">
+          <div class="flex flex-column gap-3 p-3">
+            <div class="flex gap-3 align-items-center">
+              <label class="font-semibold w-8rem">Username:</label>
+              <div class="flex-auto">
+                <p-chip styleClass="chip-custom">
+                  <span class="font-bold p-2 uppercase">{{ Username }}</span>
+                </p-chip>
+              </div>
+            </div>
+
+            <div class="flex gap-3 align-items-center">
+              <label class="font-semibold w-8rem">Total Balance:</label>
+              <div class="flex-auto">
+                <p-chip styleClass="pl-0 mr-4 pr-3">
+                  <i
+                    class="pi pi-dollar bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center"
+                  ></i>
+                  <span class="ml-2 font-medium"> {{ TotalBalance }} </span>
+                </p-chip>
+              </div>
+            </div>
+          </div>
+
+          <!-- <img alt="Card" src="assets/images/account/card-info.png" /> -->
+        </ng-template>
+        <ng-template pTemplate="body">
+          <div
+            class="flex flex-column flex-wrap row-gap-4 justify-content-center"
+          >
+            <div class="flex flex-row justify-content-evenly">
+              <p-button
+                label="50"
+                [text]="true"
+                [raised]="true"
+                severity="secondary"
+                styleClass="btn-custom"
+                size="large"
+                icon="pi pi-dollar"
+                (onClick)="setAmountMoney(50)"
+              /><p-button
+                label="100"
+                [text]="true"
+                [raised]="true"
+                severity="secondary"
+                styleClass="btn-custom"
+                size="large"
+                icon="pi pi-dollar"
+                (onClick)="setAmountMoney(100)"
+              /><p-button
+                label="200"
+                [text]="true"
+                [raised]="true"
+                severity="secondary"
+                styleClass="btn-custom"
+                size="large"
+                icon="pi pi-dollar"
+                (onClick)="setAmountMoney(200)"
+              /><p-button
+                label="300"
+                [text]="true"
+                [raised]="true"
+                severity="secondary"
+                styleClass="btn-custom"
+                size="large"
+                icon="pi pi-dollar"
+                (onClick)="setAmountMoney(300)"
+              />
+            </div>
+
+            <div class="flex flex-row justify-content-evenly">
+              <p-button
+                label="500"
+                [text]="true"
+                [raised]="true"
+                severity="secondary"
+                styleClass="btn-custom"
+                size="large"
+                icon="pi pi-dollar"
+                (onClick)="setAmountMoney(500)"
+              /><p-button
+                label="700"
+                [text]="true"
+                [raised]="true"
+                severity="secondary"
+                styleClass="btn-custom"
+                size="large"
+                icon="pi pi-dollar"
+                (onClick)="setAmountMoney(700)"
+              /><p-button
+                label="800"
+                [text]="true"
+                [raised]="true"
+                severity="secondary"
+                styleClass="btn-custom"
+                size="large"
+                icon="pi pi-dollar"
+                (onClick)="setAmountMoney(800)"
+              /><p-button
+                label="1000"
+                [text]="true"
+                [raised]="true"
+                severity="secondary"
+                styleClass="btn-custom"
+                size="large"
+                icon="pi pi-dollar"
+                (onClick)="setAmountMoney(1000)"
+              />
+            </div>
+
+            <div class="flex flex-column gap-2 mb-3">
+              <div class="flex gap-2 align-items-center">
+                <label class="font-semibold w-6rem pr-2"> Amount: </label>
+                <p-inputNumber
+                  [(ngModel)]="_withdrawMoney"
+                  inputId="currency-us"
+                  mode="currency"
+                  currency="USD"
+                  min="0"
+                  max="3000"
+                  [minFractionDigits]="0"
+                  [maxFractionDigits]="1"
+                  locale="en-US"
+                />
+                <p-button
+                  label="Clear"
+                  severity="warning"
+                  (onClick)="setAmountMoney(0)"
+                ></p-button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="flex justify-content-center gap-2 mt-1">
+            <p-button
+              label="Withdraw"
+              severity="danger"
+              class="col-12"
+              styleClass="w-full"
+              (onClick)="WithdrawAction($event)"
+            />
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+  </p-fieldset>
+</div>
+<p-confirmDialog #cd>
+  <ng-template pTemplate="headless" let-message>
+    <div
+      class="flex flex-column align-items-center p-5 surface-overlay border-round"
+    >
+      <div
+        class="border-circle bg-red-500 inline-flex justify-content-center align-items-center h-6rem w-6rem"
+      >
+        <i class="pi pi-question text-5xl text-black-alpha-50"></i>
+      </div>
+      <span class="font-bold text-2xl block mb-2 mt-4">
+        {{ message.header }}
+      </span>
+      <p class="mb-0">
+        Are you sure withdraw<span class="font-bold ml-1">
+          {{ message.message | currency }} </span
+        >?
+      </p>
+      <div class="flex align-items-center gap-2 mt-4">
+        <button
+          pButton
+          label="Withdraw"
+          (click)="cd.accept()"
+          class="w-8rem p-button-danger"
+        ></button>
+        <button
+          pButton
+          label="Cancel"
+          (click)="cd.reject()"
+          class="p-button-outlined p-button-danger w-8rem"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-confirmDialog>

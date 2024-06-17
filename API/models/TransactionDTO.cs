@@ -13,6 +13,7 @@ namespace API.models
     public double transMoney { get; set; }
     public int transType { get; set; }
     public string dateOfTrans { get; set; }
+
     public TransactionDTO(TransactionDetail transactionDetail)
     {
       transId = transactionDetail.TransId;
@@ -20,6 +21,7 @@ namespace API.models
       transMoney = transactionDetail.TransMoney;
       transType = transactionDetail.TransType;
       dateOfTrans = transactionDetail.DateOfTrans.ToString("dd/MM/yyyy");
+
 
     }
     public TransactionDTO() { }

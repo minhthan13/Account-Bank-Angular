@@ -20,6 +20,7 @@ import { ChipModule } from 'primeng/chip';
 import { AccountDTO } from '../../../models/AccountDto.model';
 import { UserSignalService } from '../../../services/user-signal.service';
 import { MatchPasswordValidator } from '../../../shared/validation.directive';
+import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-infomation',
   standalone: true,

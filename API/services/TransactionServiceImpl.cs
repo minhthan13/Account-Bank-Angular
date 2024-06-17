@@ -52,6 +52,10 @@ namespace API.services
         }
         else if (transactionDetail.TransType == 2)
         {
+          if (account.Balance < transactionDetail.TransMoney)
+          {
+            throw new BadRequestException(400, "Insufficient balance");
+          }
           account.Balance -= transactionDetail.TransMoney;
         }
 

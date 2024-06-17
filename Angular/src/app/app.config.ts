@@ -12,7 +12,6 @@ import {
 } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
-import { ConfirmationService, MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,7 +29,5 @@ export const appConfig: ApplicationConfig = {
       preventDuplicates: true,
     }),
     // // from PrimeNg
-    ConfirmationService,
-    MessageService,
   ],
 };

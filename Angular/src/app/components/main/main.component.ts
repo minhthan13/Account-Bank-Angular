@@ -24,6 +24,7 @@ import { AccountService } from '../../services/account.service';
   ],
   styleUrl: './main.component.css',
   host: { 'collision-id': 'MainComponent' },
+  providers: [ConfirmationService],
 })
 export class MainComponent implements OnInit {
   constructor(
