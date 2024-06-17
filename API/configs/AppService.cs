@@ -24,6 +24,7 @@ namespace API.configs
     public static void AddMyService(this IServiceCollection services)
     {
       services.AddScoped<AccountService, AccountServicesImpl>();
+      services.AddScoped<TransactionService, TransactionServiceImpl>();
     }
   }
 }

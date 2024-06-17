@@ -9,5 +9,9 @@ export const ENVIROMENT = {
       REGISTER: '/account/register/',
       EDIT: '/account/edit/',
     },
+    TRANSACTION: {
+      GET_TRANSACTIONS: '/Transaction/getTransactions',
+      TRANSACTION_ACTION: '/Transaction/transaction',
+    },
   },
 };

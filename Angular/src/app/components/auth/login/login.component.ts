@@ -14,7 +14,7 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { NgStyle } from '@angular/common';
 import { AccountService } from '../../../services/account.service';
-import { AccountDTO } from '../../../models/Account.model';
+import { AccountDTO } from '../../../models/AccountDto.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserSignalService } from '../../../services/user-signal.service';
 @Component({

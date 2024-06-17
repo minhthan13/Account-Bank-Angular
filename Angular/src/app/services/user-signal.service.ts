@@ -1,5 +1,5 @@
 import { Injectable, Signal, signal } from '@angular/core';
-import { AccountDTO } from '../models/Account.model';
+import { AccountDTO } from '../models/AccountDto.model';
 import { ENVIROMENT } from '../shared/enviroments/enviroment';
 
 @Injectable({

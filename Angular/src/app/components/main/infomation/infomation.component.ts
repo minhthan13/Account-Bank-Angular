@@ -17,7 +17,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { AvatarModule } from 'primeng/avatar';
 import { CardModule } from 'primeng/card';
 import { ChipModule } from 'primeng/chip';
-import { AccountDTO } from '../../../models/Account.model';
+import { AccountDTO } from '../../../models/AccountDto.model';
 import { UserSignalService } from '../../../services/user-signal.service';
 import { MatchPasswordValidator } from '../../../shared/validation.directive';
 @Component({

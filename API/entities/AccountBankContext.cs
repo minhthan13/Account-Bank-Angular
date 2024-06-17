@@ -43,6 +43,7 @@ namespace API.entities
           transactionDetail.Property(x => x.TransId)
                   .ValueGeneratedOnAdd();
 
+          transactionDetail.Property(x => x.TransType).HasDefaultValue(1);
           transactionDetail.HasOne(td => td.Account)
                   .WithMany(a => a.TransactionDetails)
                   .HasForeignKey(td => td.AccId)
@@ -50,6 +51,8 @@ namespace API.entities
                   .HasConstraintName("FK_TransactionDetail_Account");
         });
 
+      modelBuilder.Entity<TransactionDetail>().ToTable(t => t.HasCheckConstraint("CK_TransactionDetail_TransType", "[TransType] IN (1, 2)"));
+      base.OnModelCreating(modelBuilder);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

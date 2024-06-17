@@ -8,7 +8,7 @@ import { UserSignalService } from '../../services/user-signal.service';
 import { FooterComponent } from './layout/footer/footer.component';
 import { TopbarComponent } from './layout/topbar/topbar.component';
 import { ChipModule } from 'primeng/chip';
-import { AccountDTO } from '../../models/Account.model';
+import { AccountDTO } from '../../models/AccountDto.model';
 import { AccountService } from '../../services/account.service';
 @Component({
   selector: 'app-admin',
@@ -32,9 +32,9 @@ export class MainComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private toastr: ToastrService
   ) {
-    this.userLogin = userSignal.getUserSignal;
+    this.userLogin = this.userSignal.user$;
   }
-  userLogin: AccountDTO;
+  userLogin: Signal<AccountDTO>;
   ngOnInit(): void {}
   Logout(event: Event) {
     this.confirmationService.confirm({

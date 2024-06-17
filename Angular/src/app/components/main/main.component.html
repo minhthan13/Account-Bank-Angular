@@ -20,12 +20,12 @@
           class="pi pi-dollar bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center"
         ></i>
         <span class="ml-2 font-medium">
-          {{ userLogin ? userLogin.balance : 0 }}
+          {{ userLogin() ? userLogin()?.balance : 0 }}
         </span>
       </p-chip>
       <p-chip
         styleClass="pl-2 mr-4 pr-3"
-        label="{{ userLogin?.username ?? '' }}"
+        label="{{ userLogin()?.username ?? '' }}"
         image="assets/images/logo/hyper.png"
         alt="Avatar image"
       />

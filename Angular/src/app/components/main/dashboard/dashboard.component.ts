@@ -1,6 +1,6 @@
 import { Component, Signal } from '@angular/core';
 import { UserSignalService } from '../../../services/user-signal.service';
-import { AccountDTO } from '../../../models/Account.model';
+import { AccountDTO } from '../../../models/AccountDto.model';
 
 @Component({
   selector: 'app-dashboard',
