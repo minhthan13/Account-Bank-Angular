@@ -1,1 +1,152 @@
-<p>history works!</p>
+<div class="flex flex-row justify-content-center">
+  <div class="col-10">
+    <div class="flex flex-row justify-content-end">
+      <div class="card flex justify-content-center align-content-center gap-2">
+        <div class="flex align-items-center">
+          <i class="pi pi-calendar-clock" style="font-size: 1.5rem"></i>
+        </div>
+        <p-floatLabel>
+          <p-calendar
+            [(ngModel)]="fromDate"
+            inputId="from_date"
+            variant="filled"
+            dateFormat="dd/mm/yy"
+            (ngModelChange)="dateChange($event)"
+          />
+          <label for="from_date">Form</label>
+        </p-floatLabel>
+        <span class="flex align-items-center">-</span>
+        <p-floatLabel>
+          <p-calendar
+            [(ngModel)]="toDate"
+            inputId="to_date"
+            variant="filled"
+            dateFormat="dd/mm/yy"
+            (ngModelChange)="dateChange($event)"
+          />
+          <label for="to_date">To</label>
+        </p-floatLabel>
+        <div class="flex align-items-center" (click)="ClearDate()">
+          <i class="pi pi-eraser" style="font-size: 1.5rem"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="flex flex-row justify-content-center">
+  <div class="card col-10">
+    <p-tabView>
+      <p-tabPanel header="Transactions" leftIcon="pi pi-list">
+        @if(transactions && transactions.length >0){
+        <p-table
+          [value]="transactions"
+          [paginator]="true"
+          [rows]="5"
+          [tableStyle]="{ 'min-width': '50rem' }"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 15%">Transaction Id</th>
+              <th style="width: 25%">Transaction Money</th>
+              <th style="width: 25%">Type</th>
+              <th style="width: 25%">Time</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-transaction>
+            <tr class="align-content-center">
+              <td>{{ transaction.transId }}</td>
+              <td
+                [ngClass]="{
+                  'text-green-400': transaction.transType == 1,
+                  'text-red-400': transaction.transType == 2
+                }"
+              >
+                {{
+                  transaction.transType == 1
+                    ? "+" + transaction.transMoney + "&dollar;"
+                    : "-" + transaction.transMoney + "&dollar;"
+                }}
+              </td>
+              <td>
+                @if(transaction.transType == 1){<p-tag
+                  severity="success"
+                  value="Deposite"
+                />
+                } @if(transaction.transType == 2){
+                <p-tag severity="danger" value="Withdraw" />}
+              </td>
+              <td>{{ transaction.dateOfTrans }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+        } @if(transactions&&transactions.length == 0){
+        <span>Resource Not Found</span>
+        }
+      </p-tabPanel>
+      <p-tabPanel header="Deposite" leftIcon="pi pi-dollar">
+        @if(deposites && deposites.length >0){<p-table
+          [value]="deposites"
+          [paginator]="true"
+          [rows]="5"
+          [tableStyle]="{ 'min-width': '50rem' }"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 15%">Transaction Id</th>
+              <th style="width: 25%">Transaction Money</th>
+              <th style="width: 25%">Type</th>
+              <th style="width: 25%">Time</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-deposite>
+            <tr class="align-content-center">
+              <td>{{ deposite.transId }}</td>
+              <td class="text-green-400">
+                {{ "+" + deposite.transMoney + "&dollar;" }}
+              </td>
+              <td>
+                <p-tag severity="success" value="Deposite" />
+              </td>
+              <td>{{ deposite.dateOfTrans }}</td>
+            </tr>
+          </ng-template> </p-table
+        >} @if(deposites && deposites.length == 0){
+        <span>Resource Not Found</span>
+        }
+      </p-tabPanel>
+      <p-tabPanel header="Withdraw" leftIcon="pi pi-angle-double-down">
+        @if(withdraws && withdraws.length > 0){
+        <p-table
+          [value]="withdraws"
+          [paginator]="true"
+          [rows]="5"
+          [tableStyle]="{ 'min-width': '50rem' }"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 15%">Transaction Id</th>
+              <th style="width: 25%">Transaction Money</th>
+              <th style="width: 25%">Type</th>
+              <th style="width: 25%">Time</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-withdraw>
+            <tr class="align-content-center">
+              <td>{{ withdraw.transId }}</td>
+              <td class="text-red-400">
+                {{ "-" + withdraw.transMoney + "&dollar;" }}
+              </td>
+              <td>
+                <p-tag severity="danger" value="Withdraw" />
+              </td>
+              <td>{{ withdraw.dateOfTrans }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+        } @if(withdraws && withdraws.length == 0){
+        <span>Resource Not Found</span>
+        }
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>

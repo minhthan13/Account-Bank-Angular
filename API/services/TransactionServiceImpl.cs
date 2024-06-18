@@ -19,25 +19,55 @@ namespace API.services
     }
     public async Task<List<TransactionDTO>> GetTransactionDTOs()
     {
-      return await db.TransactionDetails
-      .AsNoTracking()
-      .OrderByDescending(t => t.TransId)
+      var transactions = await db.TransactionDetails
+      .OrderByDescending(t => t.DateOfTrans)
       .Select(t => new TransactionDTO(t))
       .ToListAsync();
+      if (!transactions.Any()) throw new NotFoundException("resource not found");
+
+      return transactions;
     }
 
 
 
     public async Task<List<TransactionDTO>> GetTransactionTypeDTO(int typeId)
     {
-      return await
-       db.TransactionDetails.Where(t => t.TransType == typeId).Select(t => new TransactionDTO(t)).ToListAsync();
+      var transactions = await db.TransactionDetails.Where(t => t.TransType == typeId).OrderByDescending(t => t.DateOfTrans).Select(t => new TransactionDTO(t)).ToListAsync();
+      if (!transactions.Any()) throw new NotFoundException("resource not found");
+      return transactions;
     }
 
     public async Task<List<TransactionDTO>> GetTransactionWithAccIdDTOs(int accId)
     {
       return await
-       db.TransactionDetails.Where(t => t.AccId == accId).Select(t => new TransactionDTO(t)).ToListAsync();
+       db.TransactionDetails.Where(t => t.AccId == accId).OrderByDescending(t => t.DateOfTrans).Select(t => new TransactionDTO(t)).ToListAsync();
+    }
+    public async Task<List<TransactionDTO>> GetTransactionWithTimeDTOs(DateTime from, DateTime to, int accId)
+    {
+      DateTime fromDate = from.Date;
+      DateTime toDate = to.Date.AddDays(1).AddTicks(-1);
+      var transactions = await db.TransactionDetails
+      .Where(t => t.DateOfTrans >= fromDate && t.DateOfTrans <= toDate && t.AccId == accId)
+      .OrderByDescending(t => t.DateOfTrans)
+      .Select(t => new TransactionDTO(t))
+      .ToListAsync();
+      if (!transactions.Any()) throw new NotFoundException("resource not found");
+      return transactions;
+
+    }
+
+    public async Task<List<TransactionDTO>> GetTransactionWithNowTimeDTOs(DateTime date, int accId)
+    {
+
+      DateTime toDate = date.Date.AddDays(1).AddTicks(-1);
+      var transactions = await db.TransactionDetails
+      .Where(t => t.DateOfTrans <= toDate && t.AccId == accId)
+      .OrderBy(t => t.DateOfTrans)
+      .Select(t => new TransactionDTO(t))
+      .ToListAsync();
+      if (!transactions.Any()) throw new NotFoundException("resource not found");
+      return transactions;
+
     }
 
     public async Task Adding(TransactionDetail transactionDetail)
@@ -112,5 +142,7 @@ namespace API.services
         throw new BadRequestException(400, "update transaction failed");
       }
     }
+
+
   }
 }

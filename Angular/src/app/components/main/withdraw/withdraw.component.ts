@@ -50,7 +50,6 @@ export class WithdrawComponent implements OnInit {
       this.TotalBalance = this.user$()?.balance;
       this.Username = this.user$()?.username;
     }
-    console.log(this.user$());
   }
 
   private WithdrawMoney: number = 0;

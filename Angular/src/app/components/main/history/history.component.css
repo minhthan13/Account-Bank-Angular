@@ -1,0 +1,9 @@
+th,
+td {
+  text-align: center;
+}
+
+::ng-deep .p-datepicker table td,
+.p-datepicker table td {
+  padding: 0 !important;
+}

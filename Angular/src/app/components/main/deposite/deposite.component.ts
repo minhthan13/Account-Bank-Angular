@@ -53,7 +53,6 @@ export class DepositeComponent implements OnInit {
       this.TotalBalance = this.user$()?.balance;
       this.Username = this.user$()?.username;
     }
-    console.log(this.user$());
   }
   DepositeMoney: number = 0;
   user$: Signal<AccountDTO | null>;

@@ -17,6 +17,7 @@ import { AccountService } from '../../../services/account.service';
 import { AccountDTO } from '../../../models/AccountDto.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserSignalService } from '../../../services/user-signal.service';
+import { retry } from 'rxjs';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -57,8 +58,9 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboard']);
         },
         (err) => {
+          retry(2);
           let message = err.error.errors;
-          message?.forEach((m) => {
+          message.forEach((m) => {
             this.toastr.error(m, 'Error');
           });
         }

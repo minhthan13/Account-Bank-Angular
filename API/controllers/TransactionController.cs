@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using API.entities;
@@ -28,15 +29,16 @@ namespace API.controllers
     [HttpGet("getTransactions")]
     [Produces("application/json")]
 
-    public async Task<IActionResult> GetTransactions()
+    public async Task<IActionResult> GetTransactions(int accID)
     {
       try
       {
-        return Ok(await transactionService.GetTransactionDTOs());
+        var transactions = await transactionService.GetTransactionWithAccIdDTOs(accID);
+        return Ok(new ResponseData(200, "get transactions success", transactions));
       }
-      catch
+      catch (NotFoundException ex)
       {
-        return BadRequest();
+        return NotFound(new ErrorResponse(404, ex.Message));
       }
     }
 
@@ -50,12 +52,38 @@ namespace API.controllers
       {
         return Ok(await transactionService.GetTransactionTypeDTO(transType));
       }
-      catch
+      catch (NotFoundException ex)
       {
-        return BadRequest();
+        return NotFound(new ErrorResponse(404, ex.Message));
       }
     }
 
+    [HttpGet("findTransactionTime")]
+    [Produces("application/json")]
+
+    public async Task<IActionResult> FindTransactionTimeDTO(string? from, string? to, int accId)
+    {
+      try
+      {
+        List<TransactionDTO> transactionDTOs = [];
+        DateTime todate = to != null ? DateTime.ParseExact(to, "dd/MM/yyyy", CultureInfo.InvariantCulture) : DateTime.Now;
+        if (from == null)
+        {
+          transactionDTOs = await transactionService.GetTransactionWithNowTimeDTOs(todate, accId);
+        }
+        else
+        {
+          DateTime fromdate = DateTime.ParseExact(from, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+          transactionDTOs = await transactionService.GetTransactionWithTimeDTOs(fromdate, todate, accId);
+        }
+
+        return Ok(new ResponseData(200, "get transactions", transactionDTOs));
+      }
+      catch (NotFoundException ex)
+      {
+        return NotFound(new ErrorResponse(404, ex.Message));
+      }
+    }
 
     [HttpPost("transaction")]
     [Produces("application/json")]

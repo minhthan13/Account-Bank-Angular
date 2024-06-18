@@ -11,6 +11,7 @@ export const ENVIROMENT = {
     },
     TRANSACTION: {
       GET_TRANSACTIONS: '/Transaction/getTransactions',
+      FILTER_TIME_TRANSACTIONS: '/Transaction/findTransactionTime',
       TRANSACTION_ACTION: '/Transaction/transaction',
     },
   },

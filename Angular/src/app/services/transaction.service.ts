@@ -18,4 +18,22 @@ export class TransactionService {
       )
     );
   }
+
+  GetTransactions(userId: number) {
+    return lastValueFrom(
+      this.httpClient.get(this.baseUrl + this.END_POINT.GET_TRANSACTIONS, {
+        params: { accID: userId },
+      })
+    );
+  }
+  FilterTransactionTime(fromDate: string, toDate: string, userId: number) {
+    return lastValueFrom(
+      this.httpClient.get(
+        this.baseUrl + this.END_POINT.FILTER_TIME_TRANSACTIONS,
+        {
+          params: { from: fromDate, to: toDate, accId: userId },
+        }
+      )
+    );
+  }
 }
